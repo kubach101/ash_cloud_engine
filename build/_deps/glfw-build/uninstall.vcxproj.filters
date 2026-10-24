@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\CMakeFiles\1943fc485bdc281595e1e6d7ca759560\uninstall.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\_deps\glfw-src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\_deps\glfw-build\CMakeFiles\uninstall" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{D54B4435-D6E7-3354-B38F-6ECBA6E3F861}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

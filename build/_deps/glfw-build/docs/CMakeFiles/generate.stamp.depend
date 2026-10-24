@@ -1,0 +1,5 @@
+# CMake generation dependency list for this directory.
+C:/Users/kubac/OneDrive/Dokumenty/VkEngine/build/_deps/glfw-src/docs/CMakeLists.txt
+C:/msys64/ucrt64/share/cmake/Modules/FindDoxygen.cmake
+C:/msys64/ucrt64/share/cmake/Modules/FindPackageHandleStandardArgs.cmake
+C:/msys64/ucrt64/share/cmake/Modules/FindPackageMessage.cmake

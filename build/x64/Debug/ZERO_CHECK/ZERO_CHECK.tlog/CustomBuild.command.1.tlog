@@ -1,0 +1,10 @@
+^C:\USERS\KUBAC\ONEDRIVE\DOKUMENTY\VKENGINE\BUILD\CMAKEFILES\3D76CC61E2509DDC76FC5358F379BBC8\GENERATE.STAMP.RULE
+setlocal
+C:\msys64\ucrt64\bin\cmake.exe -SC:/Users/kubac/OneDrive/Dokumenty/VkEngine -BC:/Users/kubac/OneDrive/Dokumenty/VkEngine/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/kubac/OneDrive/Dokumenty/VkEngine/build/VkEngine.slnx
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

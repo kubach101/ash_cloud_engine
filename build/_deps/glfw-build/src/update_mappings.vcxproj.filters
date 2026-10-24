@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\CMakeFiles\1e90d46f45317e6a005dd4d865e4fc94\update_mappings.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\_deps\glfw-src\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\_deps\glfw-src\src\mappings.h.in">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\_deps\glfw-src\CMake\GenerateMappings.cmake" />
+    <None Include="C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\_deps\glfw-build\src\CMakeFiles\update_mappings" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{D54B4435-D6E7-3354-B38F-6ECBA6E3F861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{1844CD8B-EED5-33BC-85B0-F8E84C3B4AEC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

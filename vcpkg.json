@@ -1,0 +1,18 @@
+{
+  "name" : "vkengine",
+  "version-string" : "1.0.0",
+  "builtin-baseline" : "07f4812200df3d3c931c0c8a6081d3b21fe2bf9f",
+  "dependencies" : [ {
+    "name" : "vcpkg-cmake-config",
+    "version>=" : "2026-07-21"
+  }, {
+    "name" : "vcpkg-cmake",
+    "version>=" : "2025-08-07"
+  }, {
+    "name" : "vulkan",
+    "version>=" : "2023-12-17"
+  }, {
+    "name" : "glfw3",
+    "version>=" : "3.5.1"
+  } ]
+}

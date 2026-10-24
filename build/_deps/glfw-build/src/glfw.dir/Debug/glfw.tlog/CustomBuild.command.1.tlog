@@ -1,0 +1,10 @@
+^C:\USERS\KUBAC\ONEDRIVE\DOKUMENTY\VKENGINE\BUILD\_DEPS\GLFW-SRC\SRC\CMAKELISTS.TXT
+setlocal
+C:\msys64\ucrt64\bin\cmake.exe -SC:/Users/kubac/OneDrive/Dokumenty/VkEngine -BC:/Users/kubac/OneDrive/Dokumenty/VkEngine/build --check-stamp-file C:/Users/kubac/OneDrive/Dokumenty/VkEngine/build/_deps/glfw-build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
