@@ -1,41 +1,11 @@
 ================================================================================
 Linker Errors
-Generated: 2026-10-21T20:16:03.861Z
-Total Errors: 12
+Generated: 2026-10-25T14:14:49.551Z
+Total Errors: 2
 ================================================================================
 
 [LNK2019] (MSVC)
-nierozpoznany symbol zewnętrzny _vkCreateInstance@12 przywołany w funkcji _createInstance [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
-
-[LNK2019] (MSVC)
-nierozpoznany symbol zewnętrzny _vkDestroyInstance@8 przywołany w funkcji _cleanup [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
-
-[LNK2019] (MSVC)
-nierozpoznany symbol zewnętrzny _vkEnumeratePhysicalDevices@12 przywołany w funkcji _selectPhysicalDevice [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
-
-[LNK2019] (MSVC)
-nierozpoznany symbol zewnętrzny _vkGetPhysicalDeviceQueueFamilyProperties@12 przywołany w funkcji _selectQueueFamily [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
-
-[LNK2019] (MSVC)
-nierozpoznany symbol zewnętrzny _vkCreateDevice@16 przywołany w funkcji _createDevice [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
-
-[LNK2019] (MSVC)
-nierozpoznany symbol zewnętrzny _vkDestroyDevice@8 przywołany w funkcji _cleanup [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
-
-[LNK2019] (MSVC)
-nierozpoznany symbol zewnętrzny _vkGetDeviceQueue@16 przywołany w funkcji _getQueue [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
-
-[LNK2019] (MSVC)
-nierozpoznany symbol zewnętrzny _vkEnumerateInstanceVersion@4 przywołany w funkcji _logInfo [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
-
-[LNK2019] (MSVC)
-nierozpoznany symbol zewnętrzny _vkDestroySurfaceKHR@16 przywołany w funkcji _cleanup [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
-
-[LNK2019] (MSVC)
-nierozpoznany symbol zewnętrzny _vkCreateSwapchainKHR@16 przywołany w funkcji _createSwapChain [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
-
-[LNK4272] (MSVC)
-wystąpił konflikt typu maszyny biblioteki "x64" z typem maszyny docelowej "x86" [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
+nierozpoznany symbol zewnętrzny PANIC przywołany w funkcji createSwapChain [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
 
 [LNK1120] (MSVC)
-liczba nierozpoznanych elementów zewnętrznych: 10 [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]
+liczba nierozpoznanych elementów zewnętrznych: 1 [C:\Users\kubac\OneDrive\Dokumenty\VkEngine\build\VkEngine.vcxproj]

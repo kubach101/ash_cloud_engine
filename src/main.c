@@ -5,14 +5,20 @@
 #include <vulkan/vulkan.h>
 #include <GLFW/glfw3.h>
 
-#define PANIC_IF(ERROR, FORMAT, ...)                                       \
-    do                                                                     \
-    {                                                                      \
-        if (ERROR)                                                         \
-        {                                                                  \
-            fprintf(stderr, "\033[1;31m" FORMAT "\033[0m", ##__VA_ARGS__); \
-            exit(1);                                                       \
-        }                                                                  \
+#include <stdio.h>
+#include <stdlib.h>
+
+#define PANIC_IF(ERROR, FORMAT, ...)                                              \
+    do                                                                            \
+    {                                                                             \
+        int panic_err_ = (ERROR);                                                 \
+        if (panic_err_)                                                           \
+        {                                                                         \
+            fprintf(stderr,                                                       \
+                    "\033[1;31m%s -> %s -> %i -> Error(%i): " FORMAT "\033[0m\n", \
+                    __FILE__, __func__, __LINE__, panic_err_, ##__VA_ARGS__);     \
+            exit(1);                                                              \
+        }                                                                         \
     } while (0)
 
 #define WINDOW_WIDTH 800
@@ -42,10 +48,10 @@ typedef struct
     const char *windowTitle;
 
     int windowWidth, windowHeight;
-    bool resizable;
     bool fullscreen;
 
     // GLFW
+
     GLFWmonitor *windowMonitor;
     GLFWwindow *window;
 
@@ -71,7 +77,7 @@ void createWindow(State *state)
 {
     glfwInit();
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    glfwWindowHint(GLFW_RESIZABLE, state->resizable);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
     if (state->fullscreen)
     {
@@ -179,6 +185,8 @@ void createSwapChain(State *state)
 {
     VkSurfaceCapabilitiesKHR surfaceCapabilities;
     PANIC_IF(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(state->physicalDevice, state->surface, &surfaceCapabilities), "Couldn't get surface capabilities\n");
+
+    // Surface formats:
     uint32_t surfaceFormatCount;
     PANIC_IF(vkGetPhysicalDeviceSurfaceFormatsKHR(state->physicalDevice, state->surface, &surfaceFormatCount, NULL), "Couldn't get physical device surface format count\n");
     printf("Number of surface formats detected: %i\n", surfaceFormatCount);
@@ -200,10 +208,12 @@ void createSwapChain(State *state)
     PANIC_IF(surfaceFormatIndex == UINT32_MAX, "Couldn't fint suitable surface format\n");
     VkSurfaceFormatKHR surfaceFormat = surfaceFormats[surfaceFormatIndex];
     printf("Selected surface format: SRGB nonlinear\n");
+    free(surfaceFormats);
+
+    // Present modes:
     int32_t presentModeCount;
     PANIC_IF(vkGetPhysicalDeviceSurfacePresentModesKHR(state->physicalDevice, state->surface, &presentModeCount, NULL), "Couldn't get physical device present mode count\n");
     printf("Number of present modes detected: %i\n", presentModeCount);
-
     VkPresentModeKHR *presentModes = malloc(presentModeCount * sizeof(VkPresentModeKHR));
     PANIC_IF(!presentModes, "Couldn't allocate present modes array\n");
     PANIC_IF(vkGetPhysicalDeviceSurfacePresentModesKHR(state->physicalDevice, state->surface, &presentModeCount, presentModes), "Couldn't get physical device present modes\n");
@@ -228,10 +238,9 @@ void createSwapChain(State *state)
     {
         printf("Selected present mode: FIFO\n");
     }
-
-    free(surfaceFormats);
     free(presentModes);
 
+    // Swapchain:
     VkSwapchainKHR swapchain;
     VkExtent2D imageExtent = {
         .width = clamp(surfaceCapabilities.currentExtent.width, surfaceCapabilities.minImageExtent.width, surfaceCapabilities.maxImageExtent.width),
@@ -279,7 +288,6 @@ void createSwapChain(State *state)
 
     state->swapchainImageViews = malloc(state->swapchainImageCount * sizeof(VkImageView));
     PANIC_IF(!state->swapchainImageViews, "Couldn't allocate swapchain image views array");
-    PANIC_IF(vkGetSwapchainImagesKHR(state->device, state->swapchain, &state->swapchainImageCount, state->swapchainImageViews), "Couldn't get swapchain image views\n");
 
     for (int i = 0; i < state->swapchainImageCount; i++)
     {
@@ -300,7 +308,7 @@ void createSwapChain(State *state)
             .subresourceRange = subresourceRange,
             .viewType = VK_IMAGE_VIEW_TYPE_2D,
         };
-        vkCreateImageView(state->device, &imageViewCreateInfo, state->allocator, &state->swapchainImageViews[i]);
+        PANIC_IF(vkCreateImageView(state->device, &imageViewCreateInfo, state->allocator, &state->swapchainImageViews[i]), "Couldn't create image view\n");
     }
 }
 void init(State *state)
@@ -331,6 +339,8 @@ void cleanup(State *state)
     {
         vkDestroyImageView(state->device, state->swapchainImageViews[i], state->allocator);
     }
+    free(state->swapchainImageViews);
+    free(state->swapchainImages);
 
     vkDestroySwapchainKHR(state->device, state->swapchain, state->allocator);
     vkDestroyDevice(state->device, state->allocator);
@@ -347,7 +357,6 @@ int main(void)
         .windowTitle = "VkEngine",
         .windowWidth = WINDOW_WIDTH,
         .windowHeight = WINDOW_HEIGHT,
-        .resizable = false,
         .fullscreen = false,
         .apiVersion = VK_API_VERSION_1_3,
         .applicationName = "VkEngine",
