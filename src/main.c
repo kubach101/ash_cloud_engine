@@ -256,7 +256,7 @@ void createSwapChain(State *state)
         .imageArrayLayers = 1,
         .imageSharingMode = VK_SHARING_MODE_EXCLUSIVE,
         .imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
-        .oldSwapchain = state->swapchain,
+        .oldSwapchain = state->swapchain, // no old swapchain so it is equal to NULL
         .preTransform = surfaceCapabilities.currentTransform,
         .imageExtent = imageExtent,
         .imageFormat = surfaceFormat.format,
@@ -265,20 +265,7 @@ void createSwapChain(State *state)
 
     };
 
-    PANIC_IF(vkCreateSwapchainKHR(state->device, &swapchainCreateInfo, state->allocator, &swapchain), "Couldn't create swapchain\n");
-
-    if (!state->swapchainImages)
-    {
-        for (int i = 0; i < state->swapchainImageCount; i++)
-        {
-            vkDestroyImageView(state->device, state->swapchainImageViews[i], state->allocator);
-        }
-        free(state->swapchainImageViews);
-        free(state->swapchainImages);
-    }
-
-    vkDestroySwapchainKHR(state->device, state->swapchain, state->allocator);
-    state->swapchain = swapchain;
+    PANIC_IF(vkCreateSwapchainKHR(state->device, &swapchainCreateInfo, state->allocator, &state->swapchain), "Couldn't create swapchain\n");
 
     PANIC_IF(vkGetSwapchainImagesKHR(state->device, state->swapchain, &state->swapchainImageCount, NULL), "Couldn't get swapchain images count\n");
     printf("Number of swapchain images detected: %i\n", state->swapchainImageCount);

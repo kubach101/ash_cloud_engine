@@ -3,9 +3,9 @@
 # No other meaning or use of this file is supported.
 
 method=git
-command=C:/msys64/ucrt64/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/Users/kubac/OneDrive/Dokumenty/VkEngine/build/CMakeFiles/fc-tmp/glfw/glfw-gitclone.cmake
-source_dir=C:/Users/kubac/OneDrive/Dokumenty/VkEngine/build/_deps/glfw-src
-work_dir=C:/Users/kubac/OneDrive/Dokumenty/VkEngine/build/_deps
+command=C:/msys64/ucrt64/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/VkEngine/build/CMakeFiles/fc-tmp/glfw/glfw-gitclone.cmake
+source_dir=C:/VkEngine/build/_deps/glfw-src
+work_dir=C:/VkEngine/build/_deps
 repository=https://github.com/glfw/glfw.git
 remote=origin
 init_submodules=TRUE

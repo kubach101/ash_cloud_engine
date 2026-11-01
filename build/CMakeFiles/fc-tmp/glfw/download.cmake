@@ -4,6 +4,6 @@ message(VERBOSE "Executing download step for glfw")
 
 block(SCOPE_FOR VARIABLES)
 
-include("C:/Users/kubac/OneDrive/Dokumenty/VkEngine/build/CMakeFiles/fc-tmp/glfw/glfw-gitclone.cmake")
+include("C:/VkEngine/build/CMakeFiles/fc-tmp/glfw/glfw-gitclone.cmake")
 
 endblock()

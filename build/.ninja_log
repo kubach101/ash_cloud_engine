@@ -1,0 +1,25 @@
+# ninja log v7
+116	3328	8150927362369532	_deps/glfw-build/src/CMakeFiles/glfw.dir/null_joystick.c.obj	e5577bc44d69899e
+71	3349	8150927361927560	_deps/glfw-build/src/CMakeFiles/glfw.dir/osmesa_context.c.obj	d8333b87325dfe7a
+40	3387	8150927361615794	_deps/glfw-build/src/CMakeFiles/glfw.dir/vulkan.c.obj	5a564ed304ae8a81
+93	3399	8150927362153587	_deps/glfw-build/src/CMakeFiles/glfw.dir/null_monitor.c.obj	d7050c4232fcda6b
+104	3413	8150927362258924	_deps/glfw-build/src/CMakeFiles/glfw.dir/null_window.c.obj	c8a1098c0b74972a
+83	3431	8150927362042954	_deps/glfw-build/src/CMakeFiles/glfw.dir/null_init.c.obj	1fefd90de7183d6
+132	3445	8150927362536379	_deps/glfw-build/src/CMakeFiles/glfw.dir/win32_module.c.obj	28b6e14f64ff5399
+61	3456	8150927361816974	_deps/glfw-build/src/CMakeFiles/glfw.dir/egl_context.c.obj	a85819896d96060b
+11	3466	8150927361325784	_deps/glfw-build/src/CMakeFiles/glfw.dir/init.c.obj	2337b2676bbf8142
+32	3467	8150927361535506	_deps/glfw-build/src/CMakeFiles/glfw.dir/platform.c.obj	eee8227794cb341e
+24	3468	8150927361454912	_deps/glfw-build/src/CMakeFiles/glfw.dir/monitor.c.obj	7a64f8705e2f821d
+5	3486	8150927361260137	_deps/glfw-build/src/CMakeFiles/glfw.dir/context.c.obj	101c4afb504af05f
+48	3646	8150927361696239	_deps/glfw-build/src/CMakeFiles/glfw.dir/window.c.obj	2464603e98b2c7d3
+17	3674	8150927361384822	_deps/glfw-build/src/CMakeFiles/glfw.dir/input.c.obj	5c28f45d0a6f6209
+3457	3880	8150927395777372	CMakeFiles/VkEngine.dir/src/main.c.obj	4d5a5d84ad0fa25f
+3332	4539	8150927394537257	_deps/glfw-build/src/CMakeFiles/glfw.dir/win32_time.c.obj	9a83552f3c388e21
+3349	4561	8150927394713255	_deps/glfw-build/src/CMakeFiles/glfw.dir/win32_thread.c.obj	30a2de31b963dd46
+3400	4640	8150927395207656	_deps/glfw-build/src/CMakeFiles/glfw.dir/win32_joystick.c.obj	c866f73be37592d0
+3387	4661	8150927395086875	_deps/glfw-build/src/CMakeFiles/glfw.dir/win32_init.c.obj	6a741c6bbc29f8c0
+3445	4668	8150927395670187	_deps/glfw-build/src/CMakeFiles/glfw.dir/wgl_context.c.obj	867e947569e97da
+3414	4674	8150927395353216	_deps/glfw-build/src/CMakeFiles/glfw.dir/win32_monitor.c.obj	a9612fbb7e021e40
+3432	4835	8150927395534557	_deps/glfw-build/src/CMakeFiles/glfw.dir/win32_window.c.obj	1ecfe098351e6f0
+4835	5280	8150927409568355	_deps/glfw-build/src/libglfw3.a	391088169ed7900e
+5281	5462	8150927414023552	VkEngine.exe	2e2444220929bdaf

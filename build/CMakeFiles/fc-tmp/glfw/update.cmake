@@ -4,6 +4,6 @@ message(VERBOSE "Executing update step for glfw")
 
 block(SCOPE_FOR VARIABLES)
 
-include("C:/Users/kubac/OneDrive/Dokumenty/VkEngine/build/CMakeFiles/fc-tmp/glfw/glfw-gitupdate.cmake")
+include("C:/VkEngine/build/CMakeFiles/fc-tmp/glfw/glfw-gitupdate.cmake")
 
 endblock()
