@@ -23,3 +23,13 @@
 3432	4835	8150927395534557	_deps/glfw-build/src/CMakeFiles/glfw.dir/win32_window.c.obj	1ecfe098351e6f0
 4835	5280	8150927409568355	_deps/glfw-build/src/libglfw3.a	391088169ed7900e
 5281	5462	8150927414023552	VkEngine.exe	2e2444220929bdaf
+42	507	8152338897661841	CMakeFiles/VkEngine.dir/src/main.c.obj	4d5a5d84ad0fa25f
+507	811	8152338902310849	VkEngine.exe	2e2444220929bdaf
+8	183	8152366111826159	CMakeFiles/VkEngine.dir/src/main.c.obj	4d5a5d84ad0fa25f
+183	330	8152366113571648	VkEngine.exe	2e2444220929bdaf
+6	264	8152378555099816	CMakeFiles/VkEngine.dir/src/main.c.obj	4d5a5d84ad0fa25f
+265	432	8152378557688294	VkEngine.exe	2e2444220929bdaf
+6	214	8152379710304769	CMakeFiles/VkEngine.dir/src/main.c.obj	4d5a5d84ad0fa25f
+214	368	8152379712378020	VkEngine.exe	2e2444220929bdaf
+6	202	8152402853299097	CMakeFiles/VkEngine.dir/src/main.c.obj	4d5a5d84ad0fa25f
+203	418	8152402855270842	VkEngine.exe	2e2444220929bdaf
