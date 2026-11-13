@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <vulkan/vulkan.h>
 #include <GLFW/glfw3.h>

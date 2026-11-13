@@ -1,7 +1,41 @@
 #pragma once
 
+#include "headers.h"
+#include "utils.h"
+#include "structs.h"
+
+
+bool isLayerAvailable(const char *layerName)
+{
+    uint32_t layerCount;
+    PANIC_IF(vkEnumerateInstanceLayerProperties(&layerCount, NULL), "Couldn't get instance layers count\n");
+    VkLayerProperties *layers = malloc(layerCount * sizeof(VkLayerProperties));
+    PANIC_IF(layers == NULL, "Couldn't allocate layers\n");
+    PANIC_IF(vkEnumerateInstanceLayerProperties(&layerCount, layers), "Couldn't enumerate instance layers\n");
+
+    bool found = false;
+    for (uint32_t layerIndex = 0; layerIndex < layerCount; layerIndex++)
+    {
+        if (strcmp(layers[layerIndex].layerName, layerName) == 0)
+        {
+            found = true;
+            break;
+        }
+    }
+    free(layers);
+    return found;
+}
 void createInstance(State *state)
 {
+    const char *layers[] = {"VK_LAYER_KHRONOS_validation"};
+    uint32_t layerCount = 0;
+#ifndef NDEBUG
+    if (isLayerAvailable(layers[0]))
+        layerCount = 1;
+    else
+        fprintf(stderr, "Validation layer %s not available, install the Vulkan SDK\n", layers[0]);
+#endif
+
     uint32_t extensionCount;
     const char **requiredExtensions = glfwGetRequiredInstanceExtensions(&extensionCount);
     VkApplicationInfo applicationInfo = {
@@ -15,16 +49,20 @@ void createInstance(State *state)
         .pApplicationInfo = &applicationInfo,
         .enabledExtensionCount = extensionCount,
         .ppEnabledExtensionNames = requiredExtensions,
+        .enabledLayerCount = layerCount,
+        .ppEnabledLayerNames = layers,
     };
     PANIC_IF(vkCreateInstance(&createInfo, state->config.allocator, &state->context.instance), "Couldn't create VkInstance\n");
 }
 void selectPhysicalDevice(State *state)
 {
     uint32_t physicalDeviceCount;
-    PANIC_IF(vkEnumeratePhysicalDevices(state->context.instance, &physicalDeviceCount, NULL), "Couldn't enumerate VkPhysicalDevice -step1\n");
+    PANIC_IF(vkEnumeratePhysicalDevices(state->context.instance, &physicalDeviceCount, NULL), "Couldn't get physical devices count\n");
     printf("Vulkan supported physical devices detected: %i\n", physicalDeviceCount);
     PANIC_IF(physicalDeviceCount == 0, "Couldn't find vulkan supported physical devices\n");
-    PANIC_IF(vkEnumeratePhysicalDevices((state->context.instance), &(uint32_t){1}, &state->context.physicalDevice) < 0, "Couldn't enumerate VkPhysicalDevice -step2\n"); // Windows will order the devices
+    VkResult result = vkEnumeratePhysicalDevices((state->context.instance), &(uint32_t){1}, &state->context.physicalDevice); // Windows will order the devices
+    if (result != VK_INCOMPLETE)
+        PANIC_IF(result, "Couldn't enumerate physical devices\n");
 }
 void selectQueueFamily(State *state)
 {

@@ -9,6 +9,6 @@ include(FetchContent)
 FETCHCONTENT_DECLARE(GLFW GIT_REPOSITORY https://github.com/glfw/glfw.git)
 FETCHCONTENT_MAKEAVAILABLE(GLFW)
 
-add_executable(VkEngine src/main.c)
+add_executable(VkEngine src/main.c src/utils.h src/toolkit.h src/headers.h src/structs.h src/context.h src/window.h src/renderer.h)
 
 target_link_libraries(VkEngine PRIVATE Vulkan::Vulkan glfw)
