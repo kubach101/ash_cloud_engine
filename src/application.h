@@ -1,7 +1,6 @@
 #pragma once
 
 #include "context.h"
-#include "headers.h"
 #include "renderer.h"
 #include "structs.h"
 #include "utils.h"
@@ -19,6 +18,11 @@ void init(State *state) {
 void loop(State *state) {
   while (!glfwWindowShouldClose(state->window.handle)) {
     glfwPollEvents();
+
+    acquireSwapchainImage(state);
+    recordCommandBuffer(state);
+    submitCommandBuffer(state);
+    presentSwapchainImage(state);
   }
 }
 void cleanup(State *state) {

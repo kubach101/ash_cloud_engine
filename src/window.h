@@ -1,8 +1,42 @@
 #pragma once
 
-#include "toolkit.h"
+#include "headers.h"
+#include "structs.h"
+#include "utils.h"
+#include <stdbool.h>
+#include <stdint.h>
 
-#define BUFFERING 3
+void acquireSwapchainImage(State *state) {
+  PANIC_IF(vkAcquireNextImageKHR(state->context.device,
+                                 state->window.swapchain.handle, UINT64_MAX,
+                                 state->renderer.imageAcquiredSemaphore, NULL,
+                                 &state->window.swapchain.imageAcquiredIndex),
+           "Couldn't acquire next image\n");
+}
+
+void presentSwapchainImage(State *state) {
+  PANIC_IF(vkQueuePresentKHR(
+               state->context.queue,
+               &(VkPresentInfoKHR){
+                   .sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
+                   .swapchainCount = 1,
+                   .pSwapchains = &state->window.swapchain.handle,
+                   .pImageIndices = &state->window.swapchain.imageAcquiredIndex,
+                   .waitSemaphoreCount = 1,
+                   .pWaitSemaphores =
+                       &state->renderer.renderFinishedSemaphores
+                            [state->window.swapchain.imageAcquiredIndex],
+               }),
+           "Couldn't present swapchain image\n");
+
+  PANIC_IF(vkWaitForFences(state->context.device, 1,
+                           &state->renderer.inFlightFence, true, UINT64_MAX),
+           "Couldn't wait for fence\n");
+  PANIC_IF(
+      vkResetFences(state->context.device, 1, &state->renderer.inFlightFence),
+      "Couldn't reset the fence\n");
+}
+
 void createSurface(State *state) {
   PANIC_IF(
       glfwCreateWindowSurface(state->context.instance, state->window.handle,
@@ -113,25 +147,22 @@ void createSwapchainImageViews(State *state) {
            "Couldn't allocate swapchain image views array");
 
   for (int i = 0; i < state->window.swapchain.imageCount; i++) {
-    VkComponentMapping componentsMapping = {.r = VK_COMPONENT_SWIZZLE_IDENTITY,
-                                            .g = VK_COMPONENT_SWIZZLE_IDENTITY,
-                                            .b = VK_COMPONENT_SWIZZLE_IDENTITY,
-                                            .a = VK_COMPONENT_SWIZZLE_IDENTITY};
-    VkImageSubresourceRange subresourceRange = {.aspectMask =
-                                                    VK_IMAGE_ASPECT_COLOR_BIT,
-                                                .layerCount = 1,
-                                                .levelCount = 1};
-    VkImageViewCreateInfo imageViewCreateInfo = {
-        .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
-        .format = state->window.swapchain.format,
-        .image = state->window.swapchain.images[i],
-        .components = state->config.swapchainComponentsMapping,
-        .subresourceRange = subresourceRange,
-        .viewType = VK_IMAGE_VIEW_TYPE_2D,
-    };
-    PANIC_IF(vkCreateImageView(state->context.device, &imageViewCreateInfo,
-                               state->config.allocator,
-                               &state->window.swapchain.imageViews[i]),
+    PANIC_IF(vkCreateImageView(
+                 state->context.device,
+                 &(VkImageViewCreateInfo){
+                     .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+                     .format = state->window.swapchain.format,
+                     .image = state->window.swapchain.images[i],
+                     .components = state->config.swapchainComponentsMapping,
+                     .subresourceRange =
+                         (VkImageSubresourceRange){
+                             .aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
+                             .layerCount = 1,
+                             .levelCount = 1},
+                     .viewType = VK_IMAGE_VIEW_TYPE_2D,
+                 },
+                 state->config.allocator,
+                 &state->window.swapchain.imageViews[i]),
              "Couldn't create image view\n");
   }
 }
@@ -153,33 +184,35 @@ void createSwapchain(State *state) {
   surfaceCapabilities.minImageExtent.height,
   surfaceCapabilities.maxImageExtent.height)};
 */
-  VkSwapchainCreateInfoKHR swapchainCreateInfo = {
-      .sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
-      .surface = state->window.surface,
-      .queueFamilyIndexCount = 1,
-      .pQueueFamilyIndices = &state->context.queueFamily,
-      .clipped = true,
-      .compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
-      .imageArrayLayers = 1,
-      .imageSharingMode = VK_SHARING_MODE_EXCLUSIVE,
-      .imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
-      .oldSwapchain = state->window.swapchain
-                          .handle, // no old swapchain so it is equal to NULL
-      .preTransform = surfaceCapabilities.currentTransform,
-      .imageExtent = state->window.swapchain.imageExtend,
-      .imageFormat = state->window.swapchain.format,
-      .presentMode = presentMode,
-      .minImageCount = clamp(
-          state->config.swapchainBuffering, surfaceCapabilities.minImageCount,
-          surfaceCapabilities.maxImageCount ? surfaceCapabilities.maxImageCount
-                                            : UINT32_MAX),
-
-  };
-
-  PANIC_IF(vkCreateSwapchainKHR(state->context.device, &swapchainCreateInfo,
-                                state->config.allocator,
-                                &state->window.swapchain.handle),
-           "Couldn't create swapchain\n");
+  PANIC_IF(
+      vkCreateSwapchainKHR(
+          state->context.device,
+          &(VkSwapchainCreateInfoKHR){
+              .sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
+              .surface = state->window.surface,
+              .queueFamilyIndexCount = 1,
+              .pQueueFamilyIndices = &state->context.queueFamily,
+              .clipped = true,
+              .compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
+              .imageArrayLayers = 1,
+              .imageSharingMode = VK_SHARING_MODE_EXCLUSIVE,
+              .imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
+              .oldSwapchain =
+                  state->window.swapchain
+                      .handle, // no old swapchain so it is equal to NULL
+              .preTransform = surfaceCapabilities.currentTransform,
+              .imageExtent = state->window.swapchain.imageExtend,
+              .imageFormat = state->window.swapchain.format,
+              .presentMode = presentMode,
+              .minImageCount =
+                  clamp(state->config.swapchainBuffering,
+                        surfaceCapabilities.minImageCount,
+                        surfaceCapabilities.maxImageCount
+                            ? surfaceCapabilities.maxImageCount
+                            : UINT32_MAX),
+          },
+          state->config.allocator, &state->window.swapchain.handle),
+      "Couldn't create swapchain\n");
   getSwapchainImages(state);
   createSwapchainImageViews(state);
 }

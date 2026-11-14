@@ -9,7 +9,8 @@ int main(void) {
                    .applicationName = "VkEngine",
                    .engineName = "ash_cloud",
                    .swapchainComponentsMapping = (VkComponentMapping){},
-                   .swapchainBuffering = SWAPCHAIN_TRIPLE_BUFFERING};
+                   .swapchainBuffering = SWAPCHAIN_TRIPLE_BUFFERING,
+                   .backgroundColor = {{0.03f, 0.03f, 0.03f, 1.0f}}};
 
   State state = {
       .config = config,

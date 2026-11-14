@@ -1,0 +1,9 @@
+If:
+  PathMatch: src/.*\.h
+CompileFlags:
+  Add:
+    - -std=gnu17
+    - -isystem
+    - C:/VulkanSDK/1.4.357.0/include
+    - -IC:/VkEngine/build/_deps/glfw-src/include
+    - -IC:/VkEngine/build/_deps/cglm-src/include

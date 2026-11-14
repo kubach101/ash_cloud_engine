@@ -1,9 +1,9 @@
 #pragma once
 
-#include "headers.h"
-#include "utils.h"
-#include "structs.h"
-#include "context.h"
-#include "window.h"
-#include "renderer.h"
 #include "application.h"
+#include "context.h"
+#include "headers.h"
+#include "renderer.h"
+#include "structs.h"
+#include "utils.h"
+#include "window.h"

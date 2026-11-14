@@ -15,6 +15,8 @@ typedef struct {
   VkComponentMapping swapchainComponentsMapping;
   uint32_t swapchainBuffering;
 
+  VkClearValue backgroundColor;
+
 } Config;
 typedef struct {
   uint32_t imageCount;
@@ -24,6 +26,7 @@ typedef struct {
   VkFormat format;
   VkColorSpaceKHR colorSpace;
   VkExtent2D imageExtend;
+  uint32_t imageAcquiredIndex;
 
 } Swapchain;
 typedef struct {
@@ -40,11 +43,24 @@ typedef struct {
   VkQueue queue;
 
 } Context;
+
 typedef struct {
   VkPipeline graphicsPipeline;
   VkPipelineLayout graphicsPipelineLayout;
   VkRenderPass renderPass;
   VkFramebuffer *framebuffers;
+  VkCommandPool commandPool;
+  VkCommandBuffer *commandBuffers;
+  VkSemaphore imageAcquiredSemaphore;
+  VkSemaphore *renderFinishedSemaphores; // one per swapchain image
+  VkFence inFlightFence;
+
+  VkDescriptorSetLayout descriptorSetLayout;
+  VkDescriptorPool descriptorPool;
+  VkDescriptorSet descriptorSet;
+  VkBuffer sphereBuffer;
+  VkDeviceMemory sphereMemory;
+  void *sphereMapped;
 } Renderer;
 typedef struct {
   Config config;
@@ -55,13 +71,12 @@ typedef struct {
 } State;
 
 typedef struct {
-  float v[3];
-} vec3;
-typedef struct {
-  int type;
-  vec3 pos; // todo: full mat4 model matrix after getting cglm
-  float scale;
-} Body;
+  float player[3];
+  float fov;            // offset 0
+  float resolution[2];  // offset 16
+  float boundingRadius; // offset 24
+  uint32_t sphereCount; // offset 28
+} PushConstants;        // 32 bytes
 
 enum swapchainBuffering {
   SWAPCHAIN_DOUBLE_BUFFERING = 2,
